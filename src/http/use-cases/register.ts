@@ -3,6 +3,7 @@ import {z} from 'zod'
 import { hash } from "bcryptjs"
 import { error } from "console"
 import { PrimsaUsersRepository } from "../repositories/prisma-users-repository"
+import { IUsersRepository } from "../repositories/IUsers"
 
 interface RegisterUseCaseRequest{
     name:string
@@ -15,7 +16,7 @@ interface RegisterUseCaseRequest{
 
 export class  RegisterUseCase {
 
-    constructor(private usersRepositor:any){
+    constructor(private usersRepositor:IUsersRepository){
         
     }
     
