@@ -1,6 +1,6 @@
-import { prisma } from "../../lib/prisma"
+import { prisma } from "../../../lib/prisma"
 
-import {IUsers,IUsersRepository } from './IUsers'
+import {IUsers,IUsersRepository } from '../IUsers'
 
 
 

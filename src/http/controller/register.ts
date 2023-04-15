@@ -2,7 +2,7 @@ import {FastifyRequest,FastifyReply} from 'fastify'
 
 import {z} from 'zod'
 import {RegisterUseCase} from '../use-cases/register'
-import { PrimsaUsersRepository } from '../repositories/prisma-users-repository'
+import { PrimsaUsersRepository } from '../repositories/prisma/prisma-users-repository'
 
 
 export async function register(request:FastifyRequest,reply:FastifyReply) {
