@@ -1,8 +1,9 @@
 import {FastifyRequest,FastifyReply} from 'fastify'
 
-import {z} from 'zod'
+import {ZodCatch, ZodError, z} from 'zod'
 import {RegisterUseCase} from '../use-cases/register'
 import { PrimsaUsersRepository } from '../repositories/prisma/prisma-users-repository'
+import { UserAlreadyExistsError } from '../use-cases/erros/user-already-exists-erro'
 
 
 export async function register(request:FastifyRequest,reply:FastifyReply) {
@@ -22,9 +23,14 @@ export async function register(request:FastifyRequest,reply:FastifyReply) {
         await registerUseCase.execute({name,email,password})
 
     }catch(error){
+        if(error instanceof UserAlreadyExistsError){
+            return reply.status(409).send(error.message)
 
-        return reply.status(409).send(error.message)
+        }
 
+    
+
+            return reply.status(500)
     }
    
 
