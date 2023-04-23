@@ -1,13 +1,19 @@
 
 import { hash } from "bcryptjs"
-import { IUsersRepository } from "../repositories/IUsers"
+import { IUsersRepository , IUsers} from "../repositories/IUsers"
 import { UserAlreadyExistsError } from "./erros/user-already-exists-erro"
+
+
 
 
 interface RegisterUseCaseRequest{
     name:string
     email:string
     password:string
+}
+
+interface RegisterUseCaseResponse{
+    user:IUsers
 }
 
 // SOLID
@@ -19,7 +25,7 @@ export class  RegisterUseCase {
         
     }
     
-    async execute({name,email,password}:RegisterUseCaseRequest) {
+    async execute({name,email,password}:RegisterUseCaseRequest): Promise<RegisterUseCaseResponse> {
         
         const userWithSameEmail = await this.usersRepositor.findByEmail(email)
         
@@ -31,12 +37,15 @@ export class  RegisterUseCase {
         const password_hash = await hash(password,6)
         
      
-        await this.usersRepositor.create({
+       const user = await this.usersRepositor.create({
             name,
             email,
             password_hash
         })
        
+        return {
+            user,
+        }
         
     }
 }
